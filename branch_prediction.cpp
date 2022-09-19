@@ -51,4 +51,24 @@ i32 main(void)
     LOG(setw(40) << "Clock cycles with sort: " << (CyclesEnd - CyclesStart) / 1000000.0f << "M");
     LOG(setw(40) << "WriteOut: " << WriteOut);
     LOG("However, sort takes time too so keep that in mind: " << (SortEnd - SortStart) / 1000000.0f << "M");
+
+    WriteOut = 0;
+    CyclesStart = __rdtsc();
+    for (u32 i = 0; i < N_OF_ITEMS; ++i)
+    {
+        WriteOut += -(Data[i] < 128) & Data[i];
+    }
+    CyclesEnd = __rdtsc();
+    LOG(setw(40) << "Clock cycles with bit trick 1: " << (CyclesEnd - CyclesStart) / 1000000.0f << "M");
+    LOG(setw(40) << "WriteOut: " << WriteOut);
+
+    WriteOut = 0;
+    CyclesStart = __rdtsc();
+    for (u32 i = 0; i < N_OF_ITEMS; ++i)
+    {
+        WriteOut += ((Data[i] - 128) >> 31) & Data[i];
+    }
+    CyclesEnd = __rdtsc();
+    LOG(setw(40) << "Clock cycles with bit trick 2: " << (CyclesEnd - CyclesStart) / 1000000.0f << "M");
+    LOG(setw(40) << "WriteOut: " << WriteOut);
 }
