@@ -5,7 +5,7 @@
 /***
  * THIS EXAMPLE IS FOR CPU THAT HAS 64 BYTES SIZED CACHE LINES
  * 
- * The following test is only relevant for parallelized processing, when multiple threads tries to get ownership of the same cache line, resulting in "false sharing".
+ * The following test is only relevant for parallelized processing, when multiple threads tries to write (reading does not conflict) to the same cache line, resulting in "false sharing".
  * To avoid this, keep data that are not used together apart from memory, specifically in this case, keep the data on separate cache lines. Add padding, if necessary.
  * This wastes space, but guarantees that the 2 data pieces are on separate cache lines.
  */

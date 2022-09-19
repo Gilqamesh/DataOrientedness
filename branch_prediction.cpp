@@ -14,14 +14,14 @@
 i32 main(void)
 {
     vector<i32> Data(N_OF_ITEMS, 0);
-    for (i32 i = 0; i < N_OF_ITEMS; ++i)
+    for (u32 i = 0; i < N_OF_ITEMS; ++i)
     {
         Data[i] = GetRand(0, 255);
     }
 
     i32 WriteOut = 0;
     u64 CyclesStart = __rdtsc();
-    for (i32 i = 0; i < N_OF_ITEMS; ++i)
+    for (u32 i = 0; i < N_OF_ITEMS; ++i)
     {
         // as data is inconsistent, the branch predictor cannot generate
         // predictable results and needs to unroll for a lot of extra work
@@ -31,16 +31,16 @@ i32 main(void)
         }
     }
     u64 CyclesEnd = __rdtsc();
-    LOG(setw(20 + strlen("Clock cycles")) << "Clock cycles");
-    LOG(setw(20) << "Without sort: " << (CyclesEnd - CyclesStart) / 1000000.0f << "M");
+    LOG(setw(40) << "Clock cycles without sort: " << (CyclesEnd - CyclesStart) / 1000000.0f << "M");
+    LOG(setw(40) << "WriteOut: " << WriteOut);
 
-    WriteOut = 0;
     u64 SortStart = __rdtsc();
     sort(Data.begin(), Data.end());
     u64 SortEnd = __rdtsc();
 
+    WriteOut = 0;
     CyclesStart = __rdtsc();
-    for (i32 i = 0; i < N_OF_ITEMS; ++i)
+    for (u32 i = 0; i < N_OF_ITEMS; ++i)
     {
         if (Data[i] < 128)
         {
@@ -48,7 +48,7 @@ i32 main(void)
         }
     }
     CyclesEnd = __rdtsc();
-    LOG(setw(20) << "With sort: " << (CyclesEnd - CyclesStart) / 1000000.0f << "M");
-
+    LOG(setw(40) << "Clock cycles with sort: " << (CyclesEnd - CyclesStart) / 1000000.0f << "M");
+    LOG(setw(40) << "WriteOut: " << WriteOut);
     LOG("However, sort takes time too so keep that in mind: " << (SortEnd - SortStart) / 1000000.0f << "M");
 }
