@@ -5,6 +5,7 @@
 # include <iostream>
 using namespace std;
 # define LOG(x) (cout << x << endl)
+# define LINE() (LOG(__LINE__))
 
 # include <cstdint>
 typedef int8_t      i8;
@@ -19,18 +20,17 @@ typedef uint64_t    u64;
 typedef float       r32;
 typedef double      r64;
 
-# if defined(_MSC_VER)
-#  include <intrin.h> // for __rdtsc() intrinsic
-# endif
+# include <intrin.h> // for __rdtsc() intrinsic
 # include <random>
 # include <vector>
 # include <algorithm>
 # include <thread>
 # include <iomanip>
 # include <cstring>
+# include <stdlib.h> // for aligned_alloc
 
-static random_device dev;
-static mt19937 rng(dev());
+random_device dev;
+mt19937 rng(dev());
 b32 IsRandomDeviceInitialized;
 
 inline r32

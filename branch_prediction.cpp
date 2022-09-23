@@ -11,7 +11,8 @@
  * - ensure that branching happens in large chunks of true or false evaluations (in this example I just just had to sort the data for the condition)
  */
 
-i32 main(void)
+i32
+main(void)
 {
     vector<i32> Data(N_OF_ITEMS, 0);
     for (u32 i = 0; i < N_OF_ITEMS; ++i)
